@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todoro App</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Permanent+Marker&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="header">
+                <h1>Por hacer</h1>
+            </div>
+            <div class="new-task">
+                <form action="#">
+                    <input type="text" placeholder="Nueva tarea" />
+                    <button class="button" id="btnNuevaTarea">
+                        <img src="./images/agregar.png" alt="agregar_tarea">
+                    </button>
+                </form>
+            </div>
+            <div class="list">
+                <ul id="all_tasks">
+                    <li class="task" draggable="true">
+                        <input type="checkbox">
+                        <span contenteditable="true">Activity</span>
+                    </li>
+                    <li class="task" draggable="true">
+                        <input type="checkbox">
+                        <span contenteditable="true" class="done-task">Activity</span>
+                    </li>
+                    <li class="task" draggable="true">
+                        <input type="checkbox">
+                        <span contenteditable="true">Activity</span>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="pomodoro">
+                <button class="button" id="btnPomodoro">
+                    <img src="./images/pomodoro.png" alt="pomodoro">
+                </button>
+                <div class="timer">
+                    <span>12:25</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

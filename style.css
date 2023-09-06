@@ -18,6 +18,10 @@ main {
     margin: 0;
 }
 
+button {
+    cursor: pointer;
+}
+
 .container {
     background-color: #393E46;
     display: flex;
@@ -27,13 +31,13 @@ main {
 }
 
 .header {
-    width: 100%;
     display: flex;
+    width: 100%;
     justify-content: center;
     text-transform: uppercase;
     font-family: 'Permanent Marker', cursive;
     background-color: #FFD369;
-    color: #222831;
+    color: #393E46;
 }
 
 .new-task {
@@ -62,14 +66,14 @@ main {
     background-color: #EEEEEE;
 }
 
-.button {
+.transparent-btn {
     padding: 0;
     border: none;
     background-color: transparent;
     height: 3rem;
 }
 
-.button img {
+.transparent-btn img {
     height: 100%;
 }
 
@@ -123,4 +127,86 @@ main {
     text-transform: uppercase;
     font-size: 6rem;
 
+}
+
+.hide {
+    display: none;
+}
+
+.modal {
+    width: 50%;
+    background-color: #393E46;
+}
+
+.modal-header {
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFD369;
+    color: #222831;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header button {
+    height: 1rem;
+}
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.param {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    width: 60%;
+    text-align: center;
+    row-gap: 0.25rem;
+}
+
+.param span {
+    font-size: 1.5rem;
+}
+
+input[type='range'] {
+    accent-color: #FFD369;
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+    padding-bottom: 2rem;
+}
+
+.modal-footer button {
+    width: 25%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: none;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: #fff;
+    outline: #FFD369 1px solid;
+
+}
+
+.primary-btn {
+    background-color: #FFD369;
+    color: #222831;
+    outline: #222831 1px solid;
 }

@@ -21,9 +21,9 @@
                 <h1>Por hacer</h1>
             </div>
             <div class="new-task">
-                <form action="#">
-                    <input type="text" placeholder="Nueva tarea" />
-                    <button class="button" id="btnNuevaTarea">
+                <form id="frmNuevaTarea">
+                    <input type="text" placeholder="Nueva tarea" id="txtNuevaTarea" />
+                    <button class="transparent-btn" id="btnNuevaTarea">
                         <img src="./images/agregar.png" alt="agregar_tarea">
                     </button>
                 </form>
@@ -36,7 +36,7 @@
                     </li>
                     <li class="task" draggable="true">
                         <input type="checkbox">
-                        <span contenteditable="true" class="done-task">Activity</span>
+                        <span contenteditable="true">Activity</span>
                     </li>
                     <li class="task" draggable="true">
                         <input type="checkbox">
@@ -46,12 +46,41 @@
                 </ul>
             </div>
             <div class="pomodoro">
-                <button class="button" id="btnPomodoro">
+                <button class="transparent-btn" id="btnPomodoro">
                     <img src="./images/pomodoro.png" alt="pomodoro">
                 </button>
-                <div class="timer">
+                <div class="timer hide" id="timer">
                     <span>12:25</span>
                 </div>
+            </div>
+        </div>
+        <div id="timerConfig" class="modal">
+            <div class="modal-header">
+                <h3>Parámetros</h3>
+                <button class="transparent-btn">
+                    <img src="./images/cancelar.png" alt="boton-cerrar">
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="param">
+                    <span id="workTimeSpan">25 min</span>
+                    <input type="range" id="workTime" min="5" max="45" step="5" value="25">
+                    <label for="workTime">Trabajo</label>
+                </div>
+                <div class="param">
+                    <span id="restTimeSpan">5 min</span>
+                    <input type="range" id="restTime" min="0" max="10" step="1" value="5">
+                    <label for="restTime">Descanso</label>
+                </div>
+                <div class="param">
+                    <span id="repsSpan">5</span>
+                    <input type="range" id="reps" min="1" max="9" step="1" value="5">
+                    <label for="reps">Repeticiones</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn">Cancelar</button>
+                <button class="primary-btn">Iniciar</button>
             </div>
         </div>
     </main>

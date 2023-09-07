@@ -14,8 +14,11 @@ body {
 
 main {
     width: 100dvw;
-    padding: 1rem;
+    padding-top: 1rem;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button {
@@ -23,11 +26,16 @@ button {
 }
 
 .container {
+    width: 90%;
+    min-width: 288px;
+    max-width: 864px;
     background-color: #393E46;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 0.75rem;
+    z-index: 0;
 }
 
 .header {
@@ -38,6 +46,8 @@ button {
     font-family: 'Permanent Marker', cursive;
     background-color: #FFD369;
     color: #393E46;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
 }
 
 .new-task {
@@ -53,7 +63,7 @@ button {
     justify-content: center;
     align-items: center;
     gap: 0.75rem;
-    padding: 0 0.75rem;
+    padding: 0 1rem;
 }
 
 .new-task input[type="text"] {
@@ -71,10 +81,12 @@ button {
     border: none;
     background-color: transparent;
     height: 3rem;
+    aspect-ratio: 1/1 !important;
 }
 
 .transparent-btn img {
     height: 100%;
+    width: 100%;
 }
 
 .list {
@@ -86,7 +98,7 @@ button {
 
 .list ul {
     list-style-type: none;
-    padding: 0 0.75rem;
+    padding: 0 1rem;
     margin: 0;
 }
 
@@ -129,13 +141,25 @@ button {
 
 }
 
-.hide {
-    display: none;
+.modal-container {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    place-content: center;
+    background-color: rgba(39, 39, 39, 0.664);
 }
 
 .modal {
-    width: 50%;
+    width: 80%;
+    max-width: 576px;
+    min-width: 288px;
     background-color: #393E46;
+    border-radius: 0.75rem;
 }
 
 .modal-header {
@@ -146,6 +170,8 @@ button {
     background-color: #FFD369;
     color: #222831;
     margin-bottom: 1.5rem;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
 }
 
 .modal-header button {
@@ -189,6 +215,7 @@ input[type='range'] {
 
 .modal-footer button {
     width: 25%;
+    min-width: 90px;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     border-radius: 0.25rem;
@@ -196,6 +223,7 @@ input[type='range'] {
     font-size: 0.9rem;
     font-weight: bold;
     border: none;
+    text-align: center;
 }
 
 .secondary-btn {
@@ -209,4 +237,19 @@ input[type='range'] {
     background-color: #FFD369;
     color: #222831;
     outline: #222831 1px solid;
+}
+
+
+@media (max-width: 420px) {
+    .modal-footer button {
+        width: 40%;
+    }
+
+    .secondary-btn {
+        display: none;
+    }
+}
+
+.hide {
+    display: none;
 }

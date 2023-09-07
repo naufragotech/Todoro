@@ -54,33 +54,35 @@
                 </div>
             </div>
         </div>
-        <div id="timerConfig" class="modal">
-            <div class="modal-header">
-                <h3>Parámetros</h3>
-                <button class="transparent-btn">
-                    <img src="./images/cancelar.png" alt="boton-cerrar">
-                </button>
-            </div>
-            <div class="modal-content">
-                <div class="param">
-                    <span id="workTimeSpan">25 min</span>
-                    <input type="range" id="workTime" min="5" max="45" step="5" value="25">
-                    <label for="workTime">Trabajo</label>
+        <div class="modal-container hide">
+            <div id="timerConfig" class="modal">
+                <div class="modal-header">
+                    <h3>Parámetros</h3>
+                    <button class="transparent-btn">
+                        <img src="./images/cancelar.png" alt="boton-cerrar">
+                    </button>
                 </div>
-                <div class="param">
-                    <span id="restTimeSpan">5 min</span>
-                    <input type="range" id="restTime" min="0" max="10" step="1" value="5">
-                    <label for="restTime">Descanso</label>
+                <div class="modal-content">
+                    <div class="param">
+                        <span id="workTimeSpan">25 min</span>
+                        <input type="range" id="workTime" min="5" max="45" step="5" value="25">
+                        <label for="workTime">Trabajo</label>
+                    </div>
+                    <div class="param">
+                        <span id="restTimeSpan">5 min</span>
+                        <input type="range" id="restTime" min="0" max="10" step="1" value="5">
+                        <label for="restTime">Descanso</label>
+                    </div>
+                    <div class="param">
+                        <span id="repsSpan">5</span>
+                        <input type="range" id="reps" min="1" max="9" step="1" value="5">
+                        <label for="reps">Repeticiones</label>
+                    </div>
                 </div>
-                <div class="param">
-                    <span id="repsSpan">5</span>
-                    <input type="range" id="reps" min="1" max="9" step="1" value="5">
-                    <label for="reps">Repeticiones</label>
+                <div class="modal-footer">
+                    <button class="secondary-btn">Cancelar</button>
+                    <button class="primary-btn">Iniciar</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="secondary-btn">Cancelar</button>
-                <button class="primary-btn">Iniciar</button>
             </div>
         </div>
     </main>

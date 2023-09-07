@@ -113,11 +113,18 @@ button {
     padding: 1rem;
 
     border-radius: 0.75rem;
+
+    cursor: grab;
 }
 
 .active-task {
     background-color: #222831;
     color: #fff;
+    cursor: grabbing;
+}
+
+input[type="checkbox"] {
+    accent-color: #FFD369;
 }
 
 .done-task {
@@ -201,6 +208,11 @@ button {
 
 input[type='range'] {
     accent-color: #FFD369;
+    cursor: grab;
+}
+
+input[type='range']:active {
+    cursor: grabbing;
 }
 
 .modal-footer {

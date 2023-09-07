@@ -22,31 +22,23 @@
             </div>
             <div class="new-task">
                 <form id="frmNuevaTarea">
-                    <input type="text" placeholder="Nueva tarea" id="txtNuevaTarea" />
+                    <input type="text" placeholder="Nueva tarea" id="txtNuevaTarea" required="true" />
                     <button class="transparent-btn" id="btnNuevaTarea">
                         <img src="./images/agregar.png" alt="agregar_tarea">
                     </button>
                 </form>
             </div>
             <div class="list">
-                <ul id="all_tasks">
-                    <li class="task" draggable="true">
-                        <input type="checkbox">
-                        <span contenteditable="true">Activity</span>
-                    </li>
-                    <li class="task" draggable="true">
-                        <input type="checkbox">
-                        <span contenteditable="true">Activity</span>
-                    </li>
-                    <li class="task" draggable="true">
-                        <input type="checkbox">
-                        <span contenteditable="true">Activity</span>
-                    </li>
+                <ul id="tareasAbiertas">
+                </ul>
+            </div>
+            <div class="list">
+                <ul id="tareasCerradas">
 
                 </ul>
             </div>
             <div class="pomodoro">
-                <button class="transparent-btn" id="btnPomodoro">
+                <button class="transparent-btn" id="btnPomodoro" onclick="abrirModal()">
                     <img src="./images/pomodoro.png" alt="pomodoro">
                 </button>
                 <div class="timer hide" id="timer">
@@ -54,38 +46,40 @@
                 </div>
             </div>
         </div>
-        <div class="modal-container hide">
+        <div class="modal-container hide" id="modalParametros">
             <div id="timerConfig" class="modal">
                 <div class="modal-header">
                     <h3>Parámetros</h3>
-                    <button class="transparent-btn">
+                    <button class="transparent-btn" onclick="cerrarModal()">
                         <img src="./images/cancelar.png" alt="boton-cerrar">
                     </button>
                 </div>
                 <div class="modal-content">
                     <div class="param">
-                        <span id="workTimeSpan">25 min</span>
-                        <input type="range" id="workTime" min="5" max="45" step="5" value="25">
-                        <label for="workTime">Trabajo</label>
+                        <span id="trabajoSpan">25</span>
+                        <input type="range" id="trabajo" min="5" max="45" step="5" value="25">
+                        <label for="trabajo">Trabajo (min)</label>
                     </div>
                     <div class="param">
-                        <span id="restTimeSpan">5 min</span>
-                        <input type="range" id="restTime" min="0" max="10" step="1" value="5">
-                        <label for="restTime">Descanso</label>
+                        <span id="descansoSpan">5</span>
+                        <input type="range" id="descanso" min="0" max="10" step="1" value="5">
+                        <label for="descanso">Descanso (min)</label>
                     </div>
                     <div class="param">
-                        <span id="repsSpan">5</span>
-                        <input type="range" id="reps" min="1" max="9" step="1" value="5">
-                        <label for="reps">Repeticiones</label>
+                        <span id="vecesSpan">5</span>
+                        <input type="range" id="veces" min="1" max="9" step="1" value="5">
+                        <label for="veces">Repeticiones</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="secondary-btn">Cancelar</button>
-                    <button class="primary-btn">Iniciar</button>
+                    <button class="secondary-btn" onclick="cerrarModal()">Cancelar</button>
+                    <button class="primary-btn" onclick="iniciarPomodoro()">Iniciar</button>
                 </div>
             </div>
         </div>
     </main>
+
+    <script src="./index.js"></script>
 </body>
 
 </html>

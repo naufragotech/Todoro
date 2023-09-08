@@ -23,7 +23,7 @@ document.getElementById("btnNuevaTarea").addEventListener("click", (e) => {
         liNuevaTarea.appendChild(checkNuevaTarea);
         liNuevaTarea.appendChild(spanNuevatarea);
 
-        // Se agrega a la lista de tareas
+        // Se agrega a la lista de tareas abiertas
         document.getElementById("tareasAbiertas").appendChild(liNuevaTarea);
 
         // Se resetea el valor del input
@@ -47,12 +47,11 @@ document.getElementById("btnNuevaTarea").addEventListener("click", (e) => {
             // Tachar o destachar span (nombre tarea)
             if (checkNuevaTarea.checked) {
                 spanNuevatarea.classList.add("done-task");
+                document.getElementById("tareasCerradas").appendChild(liNuevaTarea);
             } else {
                 spanNuevatarea.classList.remove("done-task");
+                document.getElementById("tareasAbiertas").appendChild(liNuevaTarea);
             }
-
-            // Llevar item a la lista de tareas Cerradas
-            document.getElementById("tareasCerradas").appendChild(liNuevaTarea);
         });
     }
 });
@@ -67,6 +66,13 @@ function cerrarModal() {
     document.getElementById("modalParametros").classList.add("hide");
 }
 
+// Cerrar el modal al presionar 'Escape'
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        cerrarModal();
+    }
+})
+
 // Actualiza los números cuando detecta un cambio en algún parámetro
 document.querySelectorAll("input[type='range']").forEach((inp) => {
     inp.addEventListener("input", () => {
@@ -76,9 +82,53 @@ document.querySelectorAll("input[type='range']").forEach((inp) => {
 
 // Inicia la funcionalidad de Pomodoro
 function iniciarPomodoro() {
+    // Capturar los valores de los parámetros
     const trabajo = document.getElementById("trabajo").value;
     const descanso = document.getElementById("descanso").value;
     const veces = document.getElementById("veces").value;
 
-    console.log(trabajo, descanso, veces);
+    // Ocultar el botón de configuración de parámetros
+    document.getElementById("btnPomodoro").classList.add("hide");
+
+    // Mostrar el temporizador
+    document.getElementById("timer-bar").classList.remove("hide");
+
+    cerrarModal();
+
+    let timer = document.getElementById("timer");
+
+    for (let i = 0; i < veces; i++) {
+        countDown(timer, trabajo);
+        countDown(timer, trabajo);
+    }
+
+}
+
+function setTimer(min, sec) {
+    let timeString = "";
+
+    timeString = String(min).length > 1 ? String(min) : `0${min}`;
+    timeString += ":";
+    timeString += String(sec).length > 1 ? String(sec) : `0${sec}`;
+
+    return timeString;
+}
+
+function countDown(timer, min, sec = 0) {
+    timer.textContent = setTimer(min, sec);
+
+    let x = setInterval(() => {
+        if (sec == 0) {
+            sec = 59;
+            min--;
+        } else {
+            sec--;
+        }
+
+        if (min < 0) {
+            clearInterval(x);
+        } else {
+            timer.textContent = setTimer(min, sec);
+        }
+    }, 1000);
 }

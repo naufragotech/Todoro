@@ -80,8 +80,26 @@ document.querySelectorAll("input[type='range']").forEach((inp) => {
     })
 });
 
+const timer = document.getElementById("timer");
+
+function setTimer(min, sec) {
+
+    let timeString = "";
+
+    timeString = String(min).length > 1 ? String(min) : `0${min}`;
+    timeString += ":";
+    timeString += String(sec).length > 1 ? String(sec) : `0${sec}`;
+
+    timer.textContent = timeString;
+}
+
+let active = true;
+let paused = false;
+
 // Inicia la funcionalidad de Pomodoro
-function iniciarPomodoro() {
+async function iniciarPomodoro() {
+    active = true;
+
     // Capturar los valores de los parámetros
     const trabajo = document.getElementById("trabajo").value;
     const descanso = document.getElementById("descanso").value;
@@ -95,40 +113,52 @@ function iniciarPomodoro() {
 
     cerrarModal();
 
-    let timer = document.getElementById("timer");
+    let i = 0;
+    while (active && i < veces) {
 
-    for (let i = 0; i < veces; i++) {
-        countDown(timer, trabajo);
-        countDown(timer, trabajo);
+        try {
+            await countDown(trabajo);
+            await countDown(descanso);
+            i++;
+
+        } catch {
+            setTimer(0, 0);
+            document.getElementById("timer-bar").classList.add("hide");
+            document.getElementById("btnPomodoro").classList.remove("hide");
+        }
+
     }
 
 }
 
-function setTimer(min, sec) {
-    let timeString = "";
+function countDown(min) {
+    return new Promise((resolve, reject) => {
+        let sec = 0;
+        setTimer(min, sec);
 
-    timeString = String(min).length > 1 ? String(min) : `0${min}`;
-    timeString += ":";
-    timeString += String(sec).length > 1 ? String(sec) : `0${sec}`;
+        let cd = setInterval(() => {
 
-    return timeString;
-}
+            if (active && !paused) {
+                sec--;
+                if (sec < 0) {
+                    sec = 59;
+                    min--;
+                }
 
-function countDown(timer, min, sec = 0) {
-    timer.textContent = setTimer(min, sec);
+                if (min < 0) {
+                    resolve();
+                    clearInterval(cd);
+                } else {
+                    setTimer(min, sec);
+                }
 
-    let x = setInterval(() => {
-        if (sec == 0) {
-            sec = 59;
-            min--;
-        } else {
-            sec--;
-        }
 
-        if (min < 0) {
-            clearInterval(x);
-        } else {
-            timer.textContent = setTimer(min, sec);
-        }
-    }, 1000);
+            } else if (!active) {
+                reject();
+                clearInterval(cd);
+            }
+
+        }, 1000);
+
+    })
 }

@@ -141,12 +141,29 @@ input[type="checkbox"] {
     padding: 1rem;
 }
 
-.timer {
-    font-family: "DS-Digit";
+.timer-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: 0 1.25rem;
+}
+
+#timer {
+    font-family: "DS-Digit", 'Open Sans', sans-serif;
     text-transform: uppercase;
     font-size: 6rem;
-
 }
+
+.cycle-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+    font-size: 1.25rem;
+}
+
 
 .modal-container {
     z-index: 1;
@@ -259,6 +276,22 @@ input[type='range']:active {
 
     .secondary-btn {
         display: none;
+    }
+
+    .timer-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0 1rem;
+    }
+
+    .cycle-container {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
     }
 }
 

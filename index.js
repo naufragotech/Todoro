@@ -117,7 +117,12 @@ async function iniciarPomodoro() {
     while (active && i < veces) {
 
         try {
+
+            document.getElementById("cycle-descrip").textContent = "Trabajo";
+            document.getElementById("cycle-counter").textContent = `${i + 1} / ${veces}`;
             await countDown(trabajo);
+
+            document.getElementById("cycle-descrip").textContent = "Descanso";
             await countDown(descanso);
             i++;
 
@@ -128,6 +133,9 @@ async function iniciarPomodoro() {
         }
 
     }
+
+    document.getElementById("timer-bar").classList.add("hide");
+    document.getElementById("btnPomodoro").classList.remove("hide");
 
 }
 

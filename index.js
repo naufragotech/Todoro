@@ -99,11 +99,13 @@ let paused = false;
 // Inicia la funcionalidad de Pomodoro
 async function iniciarPomodoro() {
     active = true;
+    paused = false;
 
     // Capturar los valores de los parámetros
-    const trabajo = document.getElementById("trabajo").value;
-    const descanso = document.getElementById("descanso").value;
-    const veces = document.getElementById("veces").value;
+    const trabajo = parseInt(document.getElementById("trabajo").value);
+    const descanso = parseInt(document.getElementById("descanso").value);
+    const veces = parseInt(document.getElementById("veces").value);
+
 
     // Ocultar el botón de configuración de parámetros
     document.getElementById("btnPomodoro").classList.add("hide");
@@ -118,24 +120,24 @@ async function iniciarPomodoro() {
 
         try {
 
-            document.getElementById("cycle-descrip").textContent = "Trabajo";
+            document.getElementById("cycle-descrip").textContent = "Trabajo 💪";
             document.getElementById("cycle-counter").textContent = `${i + 1} / ${veces}`;
             await countDown(trabajo);
 
-            document.getElementById("cycle-descrip").textContent = "Descanso";
-            await countDown(descanso);
+            if (descanso !== 0) {
+                document.getElementById("cycle-descrip").textContent = "Descanso 😴";
+                await countDown(descanso);
+            }
             i++;
 
         } catch {
             setTimer(0, 0);
-            document.getElementById("timer-bar").classList.add("hide");
-            document.getElementById("btnPomodoro").classList.remove("hide");
+            stopPomodoro();
         }
 
     }
 
-    document.getElementById("timer-bar").classList.add("hide");
-    document.getElementById("btnPomodoro").classList.remove("hide");
+    stopPomodoro();
 
 }
 
@@ -169,4 +171,22 @@ function countDown(min) {
         }, 1000);
 
     })
+}
+
+function pausePomodoro() {
+    paused = true;
+    document.getElementById("btnPause").classList.add("hide");
+    document.getElementById("btnContinue").classList.remove("hide");
+}
+
+function continuePomodoro() {
+    paused = false;
+    document.getElementById("btnContinue").classList.add("hide");
+    document.getElementById("btnPause").classList.remove("hide");
+}
+
+function stopPomodoro() {
+    active = false;
+    document.getElementById("timer-bar").classList.add("hide");
+    document.getElementById("btnPomodoro").classList.remove("hide");
 }

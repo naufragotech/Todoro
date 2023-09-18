@@ -43,10 +43,21 @@
                 </button>
                 <div class="timer-container hide" id="timer-bar">
                     <div class="cycle-container">
-                        <span id="cycle-descrip">Trabajo</span>
-                        <span id="cycle-counter">1 / 2</span>
+                        <span id="cycle-descrip"></span>
+                        <span id="cycle-counter"></span>
                     </div>
-                    <span id="timer">25:00</span>
+                    <span id="timer"></span>
+                    <div class="control-container">
+                        <button class="control-btn" id="btnPause" onclick="pausePomodoro()">
+                            <img src="./images/pause.png" alt="pausar">
+                        </button>
+                        <button class="control-btn hide" id="btnContinue" onclick="continuePomodoro()">
+                            <img src="./images/continue.png" alt="continuar">
+                        </button>
+                        <button class="control-btn" id="btnStop" onclick="stopPomodoro()">
+                            <img src="./images/stop.png" alt="detener">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -21,80 +21,81 @@
                 <h1>Por hacer</h1>
             </div>
             <div class="new-task">
-                <form id="frmNuevaTarea">
-                    <input type="text" placeholder="Nueva tarea" id="txtNuevaTarea" required="true" />
-                    <button class="transparent-btn" id="btnNuevaTarea">
-                        <img src="./images/agregar.png" alt="agregar_tarea">
+                <form id="frmNewTask" autocomplete="off">
+                    <input type="text" placeholder="Nueva tarea" id="txtNewTask" required="true" />
+                    <button class="btn-transparent" id="btnNewTask">
+                        <img src="./images/add.png" alt="Agregar tarea">
                     </button>
                 </form>
             </div>
             <div class="list">
-                <ul id="tareasAbiertas">
+                <ul id="ulOpenTasks">
                 </ul>
             </div>
             <div class="list">
-                <ul id="tareasCerradas">
+                <ul id="ulClosedTasks">
 
                 </ul>
             </div>
-            <div class="pomodoro">
-                <button class="transparent-btn" id="btnPomodoro" onclick="abrirModal()">
-                    <img src="./images/pomodoro.png" alt="pomodoro">
+            <div class="pomodoro-container">
+                <button class="btn-transparent" id="btnPomodoro" onclick="openParamsModal()">
+                    <img src="./images/pomodoro.png" alt="Abrir modal de parámetros">
                 </button>
-                <div class="timer-container hide" id="timer-bar">
+                <div class="timer-container hide" id="timerBar">
                     <div class="cycle-container">
-                        <span id="cycle-descrip"></span>
-                        <span id="cycle-counter"></span>
+                        <span id="cycleDescrip"></span>
+                        <span id="cycleCounter"></span>
                     </div>
                     <span id="timer"></span>
                     <div class="control-container">
-                        <button class="control-btn" id="btnPause" onclick="pausePomodoro()">
-                            <img src="./images/pause.png" alt="pausar">
+                        <button class="btn-control" id="btnPause" onclick="pausePomodoro()">
+                            <img src="./images/pause.png" alt="Pausar Pomodoro">
                         </button>
-                        <button class="control-btn hide" id="btnContinue" onclick="continuePomodoro()">
-                            <img src="./images/continue.png" alt="continuar">
+                        <button class="btn-control hide" id="btnContinue" onclick="continuePomodoro()">
+                            <img src="./images/continue.png" alt="Continuar Pomodoro">
                         </button>
-                        <button class="control-btn" id="btnStop" onclick="stopPomodoro()">
-                            <img src="./images/stop.png" alt="detener">
+                        <button class="btn-control" id="btnStop" onclick="stopPomodoro()">
+                            <img src="./images/stop.png" alt="Detener Pomodoro">
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal-container hide" id="modalParametros">
+        <div class="modal-container hide" id="modalParams">
             <div id="timerConfig" class="modal">
                 <div class="modal-header">
                     <h3>Parámetros</h3>
-                    <button class="transparent-btn" onclick="cerrarModal()">
-                        <img src="./images/cancelar.png" alt="boton-cerrar">
+                    <button class="btn-transparent" onclick="closeParamsModal()">
+                        <img src="./images/close.png" alt="Cerrar modal">
                     </button>
                 </div>
                 <div class="modal-content">
                     <div class="param">
-                        <span id="trabajoSpan">25</span>
-                        <input type="range" id="trabajo" min="5" max="45" step="5" value="25">
-                        <label for="trabajo">Trabajo (min)</label>
+                        <span id="spanWork">25</span>
+                        <input type="range" id="rngWork" min="5" max="45" step="5" value="25">
+                        <label for="rngWork">Trabajo (min)</label>
                     </div>
                     <div class="param">
-                        <span id="descansoSpan">5</span>
-                        <input type="range" id="descanso" min="0" max="10" step="1" value="5">
-                        <label for="descanso">Descanso (min)</label>
+                        <span id="spanRest">5</span>
+                        <input type="range" id="rngRest" min="0" max="10" step="1" value="5">
+                        <label for="rngRest">Descanso (min)</label>
                     </div>
                     <div class="param">
-                        <span id="vecesSpan">5</span>
-                        <input type="range" id="veces" min="1" max="9" step="1" value="5">
-                        <label for="veces">Repeticiones</label>
+                        <span id="spanReps">5</span>
+                        <input type="range" id="rngReps" min="1" max="9" step="1" value="5">
+                        <label for="rngReps">Repeticiones</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="secondary-btn" onclick="cerrarModal()">Cancelar</button>
-                    <button class="primary-btn" onclick="iniciarPomodoro()">Iniciar</button>
+                    <button class="btn-secondary" onclick="closeParamsModal()">Cancelar</button>
+                    <button class="btn-primary" onclick="startPomodoro()">Iniciar</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <script src="./index.js"></script>
+    <script src="./to-do.js"></script>
+    <script src="./pomodoro.js"></script>
 </body>
 
 </html>

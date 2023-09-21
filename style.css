@@ -309,6 +309,10 @@ input[type='range']:active {
         padding: 0 1rem;
     }
 
+    #timer {
+        font-size: 7rem;
+    }
+
     .cycle-container {
         width: 100%;
         flex-direction: row;

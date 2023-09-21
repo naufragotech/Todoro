@@ -1,120 +1,131 @@
-// Initialize the global arrays openTasks and closedTasks
-// The openTasks are store in localStorage as a string separated by ';;;'
-let openTasks = localStorage.getItem("Todoro_openTasks");
+// Initialize the global data object stored in localStorage
+let data = localStorage.getItem("Todoro_data");
 
-// Check if is the first time opened the app (Todoro_openTasks not exist)
-if (openTasks === null) {
+// Check if is the first time opened the app (Todoro_data not exist)
+if (data === null) {
 
-    // Creates Todoro_openTasks in localStorage
-    localStorage.setItem("Todoro_openTasks", "");
-    openTasks = [];
+    // Creates Todoro_data in localStorage
+    data = {
+        openTasks: [],
+        closedTasks: []
+    };
 
-} else if (openTasks === "") {
-
-    openTasks = [];
+    saveTodoroData();
 
 } else {
 
-    openTasks = openTasks.split(";;;");
+    data = JSON.parse(data);
 
-    // Create all the tasks in the main view
-    openTasks.forEach((task) => {
+    // Create all the open tasks in the main view
+    data.openTasks = data.openTasks.filter(t => t !== "");
+
+    data.openTasks.forEach((task) => {
         createNewTask(task, true);
     });
+
+    // Errase previous closed tasks
+    data.closedTasks = [];
+
+    saveTodoroData();
+
 }
 
-// Errase previous closed tasks / create Todoro_closedTasks in localStorage
-localStorage.setItem("Todoro_closedTasks", "");
-let closedTasks = [];
+// Auxiliary function to improve readibility
+function saveTodoroData() {
+    localStorage.setItem("Todoro_data", JSON.stringify(data));
+}
+
 
 
 // Feature: Create new tasks
 document.getElementById("btnNewTask").addEventListener("click", (e) => {
-    
-    // Prevent Default in order to not refresh the page
-    e.preventDefault();
 
     const newTask = document.getElementById("txtNewTask").value;
-    createNewTask(newTask);
+
+    if (newTask !== "") {
+
+        // Prevent default in order to not refresh the page
+        e.preventDefault();
+        
+        createNewTask(newTask);
+
+    }
+
 
 });
 
 
-function createNewTask(newTask, existing = false) {
+function createNewTask(newTask, previous = false) {
 
-    if (newTask !== "") {        
+    // The li serves as container for the check and span
+    const liNewTask = document.createElement("li");
+    liNewTask.classList.add("task");
+    liNewTask.draggable = "true";
 
-        // The li serves as container for the check and span
-        const liNewTask = document.createElement("li");
-        liNewTask.classList.add("task");
-        liNewTask.draggable = "true";
+    const checkNewTask = document.createElement("input");
+    checkNewTask.type = "checkbox";
 
-        const checkNewTask = document.createElement("input");
-        checkNewTask.type = "checkbox";
+    const spanNewTask = document.createElement("span");
+    spanNewTask.contenteditable = "true";
+    spanNewTask.spellcheck = "false";
+    spanNewTask.textContent = newTask;
 
-        const spanNewTask = document.createElement("span");
-        spanNewTask.contenteditable = "true";
-        spanNewTask.spellcheck = "false";
-        spanNewTask.textContent = newTask;
+    liNewTask.appendChild(checkNewTask);
+    liNewTask.appendChild(spanNewTask);
 
-        liNewTask.appendChild(checkNewTask);
-        liNewTask.appendChild(spanNewTask);
+    // Add to the list of open Tasks
+    document.getElementById("ulOpenTasks").appendChild(liNewTask);
 
-        // Add to the list of open Tasks
-        document.getElementById("ulOpenTasks").appendChild(liNewTask);
-
-        // If it's a non pre - existing task, then add to localStorage
-        if (!existing) {
-            openTasks.push(newTask);
-            localStorage.setItem("Todoro_openTasks", openTasks.join(";;;"));
-        }
-        
-        // Add drag events to the new task
-        liNewTask.addEventListener("dragstart", () => {
-            liNewTask.classList.add("active-task");
-        });
-        
-        liNewTask.addEventListener("dragend", (e) => {
-            // Prevent default to admit tasks reordering
-            e.preventDefault();
-
-            liNewTask.classList.remove("active-task");
-        });
-        
-        // Add change checkbox events to the new task
-        checkNewTask.addEventListener("change", () => {
-
-            if (checkNewTask.checked) {
-                spanNewTask.classList.add("done-task");
-                document.getElementById("ulClosedTasks").appendChild(liNewTask);
-                
-                // Filter from the openTasks array
-                openTasks = openTasks.filter(t => t !== newTask);
-                localStorage.setItem("Todoro_openTasks", openTasks.join(";;;"));
-
-                // Add to closedTasks array
-                closedTasks.push(newTask);
-                localStorage.setItem("Todoro_closedTasks", closedTasks.join(";;;"));
-
-
-            } else {
-
-                spanNewTask.classList.remove("done-task");
-                document.getElementById("ulOpenTasks").appendChild(liNewTask);
-
-                // Filter from closedTasks array
-                closedTasks = closedTasks.filter(t => t !== newTask);
-                localStorage.setItem("Todoro_closedTasks", closedTasks.join(";;;"));
-
-                // Add to openTasks array again
-                openTasks.push(newTask);
-                localStorage.setItem("Todoro_openTasks", openTasks.join(";;;"));
-            }
-        });
-
-
-        // Reset input value and focus on it
-        document.getElementById("txtNewTask").value = "";
-        document.getElementById("txtNewTask").focus();
+    // If it's a non pre - existing task, then add to localStorage
+    if (!previous) {
+        data.openTasks.push(newTask);
+        saveTodoroData();
     }
+
+    // Add drag events to the new task
+    liNewTask.addEventListener("dragstart", () => {
+        liNewTask.classList.add("active-task");
+    });
+
+    liNewTask.addEventListener("dragend", (e) => {
+        // Prevent default to admit tasks reordering
+        e.preventDefault();
+
+        liNewTask.classList.remove("active-task");
+    });
+
+    // Add change checkbox events to the new task
+    checkNewTask.addEventListener("change", () => {
+
+        if (checkNewTask.checked) {
+            spanNewTask.classList.add("done-task");
+            document.getElementById("ulClosedTasks").appendChild(liNewTask);
+
+            // Filter from the openTasks array
+            data.openTasks = data.openTasks.filter(t => t !== newTask);
+
+            // Add to closedTasks array
+            data.closedTasks.push(newTask);
+
+            saveTodoroData();
+
+        } else {
+
+            spanNewTask.classList.remove("done-task");
+            document.getElementById("ulOpenTasks").appendChild(liNewTask);
+
+            // Filter from closedTasks array
+            data.closedTasks = data.closedTasks.filter(t => t !== newTask);
+
+            // Add to openTasks array again
+            data.openTasks.push(newTask);
+
+            saveTodoroData();
+        }
+    });
+
+
+    // Reset input value and focus on it
+    document.getElementById("txtNewTask").value = "";
+    document.getElementById("txtNewTask").focus();
 }

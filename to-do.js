@@ -37,7 +37,8 @@ function saveTodoroData() {
 
 
 
-// Feature: Create new tasks
+// *** Feature: Create new tasks ***
+
 document.getElementById("btnNewTask").addEventListener("click", (e) => {
 
     const newTask = document.getElementById("txtNewTask").value;
@@ -46,7 +47,7 @@ document.getElementById("btnNewTask").addEventListener("click", (e) => {
 
         // Prevent default in order to not refresh the page
         e.preventDefault();
-        
+
         createNewTask(newTask);
 
     }
@@ -54,20 +55,17 @@ document.getElementById("btnNewTask").addEventListener("click", (e) => {
 
 });
 
-
 function createNewTask(newTask, previous = false) {
 
     // The li serves as container for the check and span
     const liNewTask = document.createElement("li");
     liNewTask.classList.add("task");
-    liNewTask.draggable = "true";
+    liNewTask.draggable = true;
 
     const checkNewTask = document.createElement("input");
     checkNewTask.type = "checkbox";
 
     const spanNewTask = document.createElement("span");
-    spanNewTask.contenteditable = "true";
-    spanNewTask.spellcheck = "false";
     spanNewTask.textContent = newTask;
 
     liNewTask.appendChild(checkNewTask);
@@ -76,23 +74,11 @@ function createNewTask(newTask, previous = false) {
     // Add to the list of open Tasks
     document.getElementById("ulOpenTasks").appendChild(liNewTask);
 
-    // If it's a non pre - existing task, then add to localStorage
+    // If it isn't a pre-existing task, then add to localStorage
     if (!previous) {
         data.openTasks.push(newTask);
         saveTodoroData();
     }
-
-    // Add drag events to the new task
-    liNewTask.addEventListener("dragstart", () => {
-        liNewTask.classList.add("active-task");
-    });
-
-    liNewTask.addEventListener("dragend", (e) => {
-        // Prevent default to admit tasks reordering
-        e.preventDefault();
-
-        liNewTask.classList.remove("active-task");
-    });
 
     // Add change checkbox events to the new task
     checkNewTask.addEventListener("change", () => {
@@ -124,8 +110,77 @@ function createNewTask(newTask, previous = false) {
         }
     });
 
+    // Add touch and drag events to the new task
+    // Touch for mobile
+    liNewTask.addEventListener("touchstart", () => {
+        liNewTask.classList.add("active-task");
+    });
+
+    liNewTask.addEventListener("touchmove", (e) => {
+        rearrangeList(liNewTask, e.targetTouches[0].clientY);
+    })
+
+    liNewTask.addEventListener("touchend", () => {
+        liNewTask.classList.remove("active-task");
+    });
+
+    // Drag for desktop
+    liNewTask.addEventListener("dragstart", () => {
+        liNewTask.classList.add("active-task");
+    });
+
+    liNewTask.addEventListener("drag", (e) => {
+        rearrangeList(liNewTask, e.clientY);
+    })
+
+    liNewTask.addEventListener("dragend", () => {
+        liNewTask.classList.remove("active-task");
+    });
 
     // Reset input value and focus on it
     document.getElementById("txtNewTask").value = "";
     document.getElementById("txtNewTask").focus();
+}
+
+// *** Feature: Rearrange list on drag and drop ***
+
+// Function needed for dragging tasks over the lists
+document.querySelectorAll(".list").forEach((list) => {
+    list.addEventListener("dragover", (e) => {
+        e.preventDefault();
+    })
+});
+
+// Function for rearranging the list's tasks
+function rearrangeList(activeTask, clientY) {
+
+    if (clientY !== 0) {
+
+        let closestTask = null;
+        let minDistance = Number.NEGATIVE_INFINITY;
+
+        const list = activeTask.parentElement;
+        const nonActiveTasks = list.querySelectorAll(".task:not(.active-task)");
+
+        nonActiveTasks.forEach((task) => {
+
+            const taskY = task.getBoundingClientRect().top;
+            const distance = clientY - taskY;
+
+            if (distance < 0 && distance > minDistance) {
+                minDistance = distance;
+                closestTask = task;
+            }
+
+
+        });
+
+        if (closestTask === null) {
+            list.appendChild(activeTask);
+        } else {
+            list.insertBefore(activeTask, closestTask);
+        }
+
+    }
+
 }

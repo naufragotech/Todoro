@@ -1,7 +1,7 @@
 // Initialize the global data object stored in localStorage
 let data = localStorage.getItem("Todoro_data");
 
-// Check if is the first time opened the app (Todoro_data not exist)
+// Check if is the first time opened the app (Todoro_data doesn't exist)
 if (data === null) {
 
     // Creates Todoro_data in localStorage
@@ -30,9 +30,24 @@ if (data === null) {
 
 }
 
-// Auxiliary function to improve readibility
+// Auxiliary functions to improve readibility
 function saveTodoroData() {
     localStorage.setItem("Todoro_data", JSON.stringify(data));
+}
+
+function refreshTodoroData() {
+
+    openTasks = [];
+    document.querySelectorAll("#ulOpenTasks span.task-name").forEach(t => openTasks.push(t.textContent));
+
+    closedTasks = [];
+    document.querySelectorAll("#ulClosedTasks span.task-name").forEach(t => closedTasks.push(t.textContent));
+
+    data.openTasks = openTasks;
+    data.closedTasks = closedTasks;
+
+    saveTodoroData();
+
 }
 
 
@@ -57,28 +72,49 @@ document.getElementById("btnNewTask").addEventListener("click", (e) => {
 
 function createNewTask(newTask, previous = false) {
 
-    // The li serves as container for the check and span
+    // The li serves as the container for the task's info and buttons
     const liNewTask = document.createElement("li");
     liNewTask.classList.add("task");
     liNewTask.draggable = true;
 
-    const checkNewTask = document.createElement("input");
-    checkNewTask.type = "checkbox";
-
-    const spanNewTask = document.createElement("span");
-    spanNewTask.textContent = newTask;
-
-    liNewTask.appendChild(checkNewTask);
-    liNewTask.appendChild(spanNewTask);
+    addTaskInfo(liNewTask, newTask);
+    addTaskButons(liNewTask);
 
     // Add to the list of open Tasks
     document.getElementById("ulOpenTasks").appendChild(liNewTask);
 
     // If it isn't a pre-existing task, then add to localStorage
     if (!previous) {
-        data.openTasks.push(newTask);
-        saveTodoroData();
+        refreshTodoroData();
     }
+
+    addDragEvents(liNewTask);
+
+    // Reset input value and focus on it
+    document.getElementById("txtNewTask").value = "";
+    document.getElementById("txtNewTask").focus();
+}
+
+
+// * Complementary functions for creating a new task *
+
+// Create checkbox and span for task name
+function addTaskInfo(liNewTask, newTask) {
+    // Creating task info div and components
+    const divTaskInfo = document.createElement("div");
+    divTaskInfo.classList.add("task-info");
+
+    const checkNewTask = document.createElement("input");
+    checkNewTask.type = "checkbox";
+
+    const spanNewTask = document.createElement("span");
+    spanNewTask.classList.add("task-name");
+    spanNewTask.textContent = newTask;
+
+    divTaskInfo.appendChild(checkNewTask);
+    divTaskInfo.appendChild(spanNewTask);
+
+    liNewTask.append(divTaskInfo);
 
     // Add change checkbox events to the new task
     checkNewTask.addEventListener("change", () => {
@@ -87,30 +123,95 @@ function createNewTask(newTask, previous = false) {
             spanNewTask.classList.add("done-task");
             document.getElementById("ulClosedTasks").appendChild(liNewTask);
 
-            // Filter from the openTasks array
-            data.openTasks = data.openTasks.filter(t => t !== newTask);
-
-            // Add to closedTasks array
-            data.closedTasks.push(newTask);
-
-            saveTodoroData();
-
         } else {
-
             spanNewTask.classList.remove("done-task");
             document.getElementById("ulOpenTasks").appendChild(liNewTask);
 
-            // Filter from closedTasks array
-            data.closedTasks = data.closedTasks.filter(t => t !== newTask);
-
-            // Add to openTasks array again
-            data.openTasks.push(newTask);
-
-            saveTodoroData();
         }
+
+        refreshTodoroData();
+
     });
 
-    // Add touch and drag events to the new task
+}
+
+// Add action buttons for the new task
+function addTaskButons(liNewTask) {
+    // Creating task buttons div and components
+    const divTaskButtons = document.createElement("div");
+    divTaskButtons.classList.add("task-buttons");
+
+    // btnMenu
+    const btnMenu = document.createElement("button");
+    btnMenu.classList.add("btn-borderless", "btn-menu");
+
+    const imgMenu = document.createElement("img");
+    imgMenu.src = "./images/menu.png";
+    imgMenu.alt = "Menu de tarea"
+    imgMenu.width = 12;
+
+    btnMenu.appendChild(imgMenu);
+
+    console.log(btnMenu);
+
+    // btnErase
+    const btnErase = document.createElement("button");
+    btnErase.classList.add("btn-borderless", "btn-erase", "hide");
+
+    const imgErase = document.createElement("img");
+    imgErase.src = "./images/erase.png";
+    imgErase.alt = "Eliminar tarea"
+    imgErase.width = 18;
+
+    btnErase.appendChild(imgErase);
+
+    // btnEdit
+    const btnEdit = document.createElement("button");
+    btnEdit.classList.add("btn-borderless", "btn-edit", "hide");
+
+    const imgEdit = document.createElement("img");
+    imgEdit.src = "./images/edit.png";
+    imgEdit.alt = "Editar tarea";
+    imgEdit.width = 16;
+
+    btnEdit.append(imgEdit);
+
+    divTaskButtons.appendChild(btnMenu);
+    divTaskButtons.appendChild(btnErase);
+    divTaskButtons.appendChild(btnEdit);
+
+    liNewTask.append(divTaskButtons);
+
+    // Adding functionality to the buttons
+
+    btnMenu.addEventListener("click", () => showMenu(divTaskButtons));
+
+    btnErase.addEventListener("click", () => {
+        liNewTask.remove();
+        refreshTodoroData();
+    })
+
+    document.addEventListener("click", (e) => {
+        if (!divTaskButtons.contains(e.target)) {
+            hideMenu(divTaskButtons);
+        }
+    })
+}
+
+function showMenu(btnGroup) {
+    btnGroup.children[0].classList.add("hide");
+    btnGroup.children[1].classList.remove("hide");
+    btnGroup.children[2].classList.remove("hide");
+}
+
+function hideMenu(btnGroup) {
+    btnGroup.children[0].classList.remove("hide");
+    btnGroup.children[1].classList.add("hide");
+    btnGroup.children[2].classList.add("hide");
+}
+
+function addDragEvents(liNewTask) {
+    // Adding touch and drag events to the new task
     // Touch for mobile
     liNewTask.addEventListener("touchstart", () => {
         liNewTask.classList.add("active-task");
@@ -136,11 +237,8 @@ function createNewTask(newTask, previous = false) {
     liNewTask.addEventListener("dragend", () => {
         liNewTask.classList.remove("active-task");
     });
-
-    // Reset input value and focus on it
-    document.getElementById("txtNewTask").value = "";
-    document.getElementById("txtNewTask").focus();
 }
+
 
 // *** Feature: Rearrange list on drag and drop ***
 

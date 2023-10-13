@@ -24,6 +24,7 @@ main {
 
 button {
     cursor: pointer;
+    border: none;
 }
 
 .container {
@@ -104,12 +105,32 @@ button {
     background-color: #EEEEEE;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     font-size: 1.25rem;
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 0.75rem;
     cursor: grab;
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.task-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem
+}
+
+.btn-borderless {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .active-task {

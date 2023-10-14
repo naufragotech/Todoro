@@ -127,6 +127,7 @@ button {
 }
 
 .btn-borderless {
+    background-color: transparent;
     border: none;
     display: flex;
     align-items: center;
@@ -356,4 +357,8 @@ footer a:visited {
 
 .hide {
     display: none;
+}
+
+.cursor-text {
+    cursor: text;
 }

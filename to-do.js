@@ -133,6 +133,31 @@ function addTaskInfo(liNewTask, newTask) {
 
     });
 
+    // Functionality to change the task's name
+    spanNewTask.addEventListener("focusout", () => {
+        spanNewTask.contentEditable = false;
+        spanNewTask.classList.remove("cursor-text");
+
+        btnGroup = spanNewTask.parentElement.parentElement.children[1];
+        hideMenu(btnGroup);
+
+        refreshTodoroData();
+    });
+
+    spanNewTask.addEventListener("keydown", (e) => {
+
+        if (e.key === "Enter") {
+            spanNewTask.contentEditable = false;
+            spanNewTask.classList.remove("cursor-text");
+
+            btnGroup = spanNewTask.parentElement.parentElement.children[1];
+            hideMenu(btnGroup);
+
+            refreshTodoroData();
+        }
+
+    });
+
 }
 
 // Add action buttons for the new task
@@ -151,8 +176,6 @@ function addTaskButons(liNewTask) {
     imgMenu.width = 12;
 
     btnMenu.appendChild(imgMenu);
-
-    console.log(btnMenu);
 
     // btnErase
     const btnErase = document.createElement("button");
@@ -184,18 +207,33 @@ function addTaskButons(liNewTask) {
 
     // Adding functionality to the buttons
 
+    // Show menu when btnMenu clicked
     btnMenu.addEventListener("click", () => showMenu(divTaskButtons));
 
+    // Erase task when btnErase clicked
     btnErase.addEventListener("click", () => {
         liNewTask.remove();
         refreshTodoroData();
-    })
+    });
 
+    // Hide menu when clicked outside of the button group
     document.addEventListener("click", (e) => {
         if (!divTaskButtons.contains(e.target)) {
             hideMenu(divTaskButtons);
         }
-    })
+    });
+
+    // Allow edition of the task's name
+    btnEdit.addEventListener("click", () => {
+
+        spanTask = btnEdit.parentElement.parentElement.children[0].children[1];
+        spanTask.contentEditable = true;
+        spanTask.classList.add("cursor-text");
+
+        spanTask.focus();
+
+    });
+
 }
 
 function showMenu(btnGroup) {
@@ -278,6 +316,8 @@ function rearrangeList(activeTask, clientY) {
         } else {
             list.insertBefore(activeTask, closestTask);
         }
+
+        refreshTodoroData();
 
     }
 

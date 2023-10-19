@@ -1,17 +1,28 @@
-function openParamsModal() {
-    document.getElementById("modalParams").classList.remove("hide");
+const modalParamsContainer = document.getElementById("modalParamsContainer");
+
+function openModalParams() {
+    modalParamsContainer.classList.remove("hide");
 }
 
-function closeParamsModal() {
-    document.getElementById("modalParams").classList.add("hide");
+function closeModalParams() {
+    modalParamsContainer.classList.add("hide");
 }
 
-// Close params modal on 'Escape' key
+// Close modal params on 'Escape' key
 window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-        closeParamsModal();
+        closeModalParams();
     }
-})
+});
+
+// Close modal params on click outside of the modal
+modalParamsContainer.addEventListener("click", (e) => {
+
+    if (!document.getElementById("modalParams").contains(e.target)) {
+        closeModalParams();
+    }
+
+});
 
 // Show the value of the range input via the span associated
 document.querySelectorAll("input[type='range']").forEach((inp) => {
@@ -54,7 +65,7 @@ async function startPomodoro() {
 
     document.getElementById("timerBar").classList.remove("hide");
 
-    closeParamsModal();
+    closeModalParams();
 
     let i = 0;
     const cycleDescrip = document.getElementById("cycleDescrip");
@@ -132,7 +143,7 @@ function pausePomodoro() {
 
 function continuePomodoro() {
     paused = false;
-    
+
     btnContinue.classList.add("hide");
     btnPause.classList.remove("hide");
 }

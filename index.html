@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div class="pomodoro-container">
-                <button class="btn-transparent" id="btnPomodoro" onclick="openParamsModal()">
+                <button class="btn-transparent" id="btnPomodoro" onclick="openModalParams()">
                     <img src="./images/pomodoro.png" alt="Abrir modal de parámetros">
                 </button>
                 <div class="timer-container hide" id="timerBar">
@@ -60,11 +60,11 @@
                 </div>
             </div>
         </div>
-        <div class="modal-container hide" id="modalParams">
-            <div class="modal" id="timerConfig">
+        <div class="modal-container hide" id="modalParamsContainer">
+            <div class="modal" id="modalParams">
                 <div class="modal-header">
-                    <h3>Parámetros</h3>
-                    <button class="btn-transparent" onclick="closeParamsModal()">
+                    <h3>Tiempos Pomodoro</h3>
+                    <button class="btn-transparent" onclick="closeModalParams()">
                         <img src="./images/close.png" alt="Cerrar modal">
                     </button>
                 </div>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-secondary" onclick="closeParamsModal()">Cancelar</button>
+                    <button class="btn-secondary" onclick="closeModalParams()">Cancelar</button>
                     <button class="btn-primary" onclick="startPomodoro()">Iniciar</button>
                 </div>
             </div>

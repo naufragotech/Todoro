@@ -172,11 +172,11 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #FFD369;
-    color: #222831;
+    color: #EEEEEE;
     margin-bottom: 1.5rem;
     border-top-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
+    border-bottom: #777777 1px solid;
 }
 
 .modal-header button {

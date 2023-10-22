@@ -32,7 +32,7 @@ ul {
     padding: 0;
 }
 
-.container {
+.main-content {
     width: 90%;
     min-width: 288px;
     max-width: 864px;
@@ -430,22 +430,21 @@ footer a:visited {
     left: 0;
 }
 
-.carousel-btn {
+.btn-carousel {
     height: 2rem;
     padding: 0.25rem;
     background-color: #00000054;
-    cursor: pointer;
     opacity: 0.1;
     margin: 0.5rem;
     border-radius: 0.25rem;
 }
 
-.carousel-btn:hover {
+.btn-carousel:hover {
     opacity: 0.75;
     transition: 250ms opacity ease-in-out;
 }
 
-.carousel-btn img {
+.btn-carousel img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -461,7 +460,7 @@ footer a:visited {
     z-index: 3;
 }
 
-.position-btn {
+.btn-position {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
@@ -471,7 +470,7 @@ footer a:visited {
     transition: 250ms background-color ease-in-out;
 }
 
-.position-btn[data-active-position] {
+.btn-position[data-active-position] {
     background-color: #EEEEEE;
     transition: 250ms background-color ease-in-out;
 }
@@ -483,12 +482,12 @@ footer a:visited {
     padding-bottom: 1rem;
 }
 
-.help-btn {
+.btn-help {
     width: 0.75rem;
     height: 0.75rem;
     margin-right: 1rem;
 }
 
-.hide {
+.hidden {
     display: none;
 }

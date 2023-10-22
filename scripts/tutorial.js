@@ -1,11 +1,11 @@
 const modalTutorialContainer = document.getElementById("modalTutorialContainer");
 
 function openModalTutorial() {
-    modalTutorialContainer.classList.remove("hide");
+    modalTutorialContainer.classList.remove("hidden");
 }
 
 function closeModalTutorial() {
-    modalTutorialContainer.classList.add("hide");
+    modalTutorialContainer.classList.add("hidden");
 }
 
 // Close modal tutorial on click outside of the modal
@@ -17,10 +17,11 @@ modalTutorialContainer.addEventListener("click", (e) => {
 
 });
 
-const carouselBtns = document.querySelectorAll(".carousel-btn");
+const carouselBtns = document.querySelectorAll(".btn-carousel");
 const slides = [...document.querySelectorAll(".slide")];
-const positionBtns = [...document.querySelectorAll(".position-btn")];
+const positionBtns = [...document.querySelectorAll(".btn-position")];
 
+// Functino for changing the Slide
 function changeSlide(activeIndex, newIndex) {
 
     slides[newIndex].dataset.activeSlide = true;
@@ -31,6 +32,7 @@ function changeSlide(activeIndex, newIndex) {
 
 }
 
+// Change slides from the carousel buttons
 carouselBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
 
@@ -54,6 +56,7 @@ carouselBtns.forEach((btn) => {
     });
 });
 
+// Change slides from the position buttons
 positionBtns.forEach((btn) => {
 
     btn.addEventListener("click", () => {

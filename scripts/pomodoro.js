@@ -1,11 +1,11 @@
 const modalParamsContainer = document.getElementById("modalParamsContainer");
 
 function openModalParams() {
-    modalParamsContainer.classList.remove("hide");
+    modalParamsContainer.classList.remove("hidden");
 }
 
 function closeModalParams() {
-    modalParamsContainer.classList.add("hide");
+    modalParamsContainer.classList.add("hidden");
 }
 
 // Close modal params on click outside of the modal
@@ -40,7 +40,7 @@ function setTimer(min, sec) {
 }
 
 
-// Global variables for timer state (active - paused)
+// Global variables for timer state
 let active = false;
 let paused = false;
 
@@ -54,9 +54,9 @@ async function startPomodoro() {
     const rest = parseInt(document.getElementById("rngRest").value);
     const reps = parseInt(document.getElementById("rngReps").value);
 
-    document.getElementById("btnPomodoro").classList.add("hide");
+    document.getElementById("btnPomodoro").classList.add("hidden");
 
-    document.getElementById("timerBar").classList.remove("hide");
+    document.getElementById("timerBar").classList.remove("hidden");
 
     closeModalParams();
 
@@ -130,23 +130,23 @@ const btnContinue = document.getElementById("btnContinue");
 function pausePomodoro() {
     paused = true;
 
-    btnPause.classList.add("hide");
-    btnContinue.classList.remove("hide");
+    btnPause.classList.add("hidden");
+    btnContinue.classList.remove("hidden");
 }
 
 function continuePomodoro() {
     paused = false;
 
-    btnContinue.classList.add("hide");
-    btnPause.classList.remove("hide");
+    btnContinue.classList.add("hidden");
+    btnPause.classList.remove("hidden");
 }
 
 function stopPomodoro() {
     active = false;
 
-    btnContinue.classList.add("hide");
-    btnPause.classList.remove("hide");
+    btnContinue.classList.add("hidden");
+    btnPause.classList.remove("hidden");
 
-    document.getElementById("timerBar").classList.add("hide");
-    document.getElementById("btnPomodoro").classList.remove("hide");
+    document.getElementById("timerBar").classList.add("hidden");
+    document.getElementById("btnPomodoro").classList.remove("hidden");
 }

@@ -134,12 +134,12 @@ function addTaskInfo(liNewTask, newTask) {
     });
 
     // Functionality to change the task's name
+
     spanNewTask.addEventListener("focusout", () => {
         spanNewTask.contentEditable = false;
         spanNewTask.classList.remove("cursor-text");
 
-        btnGroup = spanNewTask.parentElement.parentElement.children[1];
-        hideMenu(btnGroup);
+        hideMenu(liNewTask.children[1]);
 
         refreshTodoroData();
     });
@@ -150,8 +150,7 @@ function addTaskInfo(liNewTask, newTask) {
             spanNewTask.contentEditable = false;
             spanNewTask.classList.remove("cursor-text");
 
-            btnGroup = spanNewTask.parentElement.parentElement.children[1];
-            hideMenu(btnGroup);
+            hideMenu(liNewTask.children[1]);
 
             refreshTodoroData();
         }
@@ -179,7 +178,7 @@ function addTaskButons(liNewTask) {
 
     // btnErase
     const btnErase = document.createElement("button");
-    btnErase.classList.add("btn-borderless", "btn-erase", "hide");
+    btnErase.classList.add("btn-borderless", "btn-erase", "hidden");
 
     const imgErase = document.createElement("img");
     imgErase.src = "./assets/images/erase.png";
@@ -190,7 +189,7 @@ function addTaskButons(liNewTask) {
 
     // btnEdit
     const btnEdit = document.createElement("button");
-    btnEdit.classList.add("btn-borderless", "btn-edit", "hide");
+    btnEdit.classList.add("btn-borderless", "btn-edit", "hidden");
 
     const imgEdit = document.createElement("img");
     imgEdit.src = "./assets/images/edit.png";
@@ -226,7 +225,7 @@ function addTaskButons(liNewTask) {
     // Allow edition of the task's name
     btnEdit.addEventListener("click", () => {
 
-        spanTask = btnEdit.parentElement.parentElement.children[0].children[1];
+        const spanTask = liNewTask.children[0].children[1];
         spanTask.contentEditable = true;
         spanTask.classList.add("cursor-text");
 
@@ -237,15 +236,15 @@ function addTaskButons(liNewTask) {
 }
 
 function showMenu(btnGroup) {
-    btnGroup.children[0].classList.add("hide");
-    btnGroup.children[1].classList.remove("hide");
-    btnGroup.children[2].classList.remove("hide");
+    btnGroup.children[0].classList.add("hidden"); // btnMenu
+    btnGroup.children[1].classList.remove("hidden"); //btnErase
+    btnGroup.children[2].classList.remove("hidden"); //btnEdit
 }
 
 function hideMenu(btnGroup) {
-    btnGroup.children[0].classList.remove("hide");
-    btnGroup.children[1].classList.add("hide");
-    btnGroup.children[2].classList.add("hide");
+    btnGroup.children[0].classList.remove("hidden"); //btnMenu
+    btnGroup.children[1].classList.add("hidden"); //btnErase
+    btnGroup.children[2].classList.add("hidden"); //btnEdit
 }
 
 function addDragEvents(liNewTask) {
@@ -261,6 +260,7 @@ function addDragEvents(liNewTask) {
 
     liNewTask.addEventListener("touchend", () => {
         liNewTask.classList.remove("active-task");
+        refreshTodoroData();
     });
 
     // Drag for desktop
@@ -270,17 +270,18 @@ function addDragEvents(liNewTask) {
 
     liNewTask.addEventListener("drag", (e) => {
         rearrangeList(liNewTask, e.clientY);
-    })
+    });
 
     liNewTask.addEventListener("dragend", () => {
         liNewTask.classList.remove("active-task");
+        refreshTodoroData();
     });
 }
 
 
 // *** Feature: Rearrange list on drag and drop ***
 
-// Function needed for dragging tasks over the lists
+// Function needed for dragging tasks over the lists in desktop
 document.querySelectorAll(".list").forEach((list) => {
     list.addEventListener("dragover", (e) => {
         e.preventDefault();
@@ -316,8 +317,6 @@ function rearrangeList(activeTask, clientY) {
         } else {
             list.insertBefore(activeTask, closestTask);
         }
-
-        refreshTodoroData();
 
     }
 

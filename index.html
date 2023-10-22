@@ -11,34 +11,97 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Permanent+Marker&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
 <body>
     <main>
+        <div class="modal-container hide" id="modalTutorialContainer">
+            <div class="modal" id="modalTutorial">
+                <div class="modal-header">
+                    <h4>Tutorial</h4>
+                    <button class="btn-transparent" onclick="closeModalTutorial()">
+                        <img src="./assets/images/close.png" alt="Cerrar modal de tutorial">
+                    </button>
+                </div>
+                <div class="modal-content content-tutorial">
+                    <div class="carousel" aria-label="Tutorial cómo usar Todoro app">
+                        <div class="carousel-btns-container">
+                            <button class="carousel-btn" data-carousel-btn="prev">
+                                <img src="./assets/images/prev.png" alt="Paso anterior">
+                            </button>
+                            <button class="carousel-btn" data-carousel-btn="next">
+                                <img src="./assets/images/next.png" alt="Paso siguiente">
+                            </button>
+                        </div>
+                        <ul>
+                            <li class="slide step-container" data-active-slide>
+                                <h3>Crear una nueva tarea</h3>
+                                <img class="gif-tutorial" src="./assets/images/tutorial/1 Create tasks.gif"
+                                    alt="Crear una nueva tarea">
+                            </li>
+                            <li class="slide step-container">
+                                <h3>Completar una tarea</h3>
+                                <img class="gif-tutorial" src="./assets/images/tutorial/2 Complete tasks.gif"
+                                    alt="Completar una tarea">
+                            </li>
+                            <li class="slide step-container">
+                                <h3>Reordenar las tareas</h3>
+                                <img class="gif-tutorial" src="./assets/images/tutorial/3 Reorder tasks.gif"
+                                    alt="Reordenar las tareas">
+                            </li>
+                            <li class="slide step-container">
+                                <h3>Editar y eliminar tareas</h3>
+                                <img class="gif-tutorial" src="./assets/images/tutorial/4 Edit and delete.gif"
+                                    alt="Editar y eliminar tareas">
+                            </li>
+                            <li class="slide step-container">
+                                <h3>Configurar el Pomodoro</h3>
+                                <img class="gif-tutorial" src="./assets/images/tutorial/5 Set Pomodoro.gif"
+                                    alt="Configurar el Pomodoro">
+                            </li>
+                            <li class="slide step-container">
+                                <h3>Controlar el Pomodoro</h3>
+                                <img class="gif-tutorial" src="./assets/images/tutorial/6 Control Pomodoro.gif"
+                                    alt="Controlar el Pomodoro">
+                            </li>
+                        </ul>
+                        <div class="positions-container">
+                            <button class="position-btn" data-active-position></button>
+                            <button class="position-btn"></button>
+                            <button class="position-btn"></button>
+                            <button class="position-btn"></button>
+                            <button class="position-btn"></button>
+                            <button class="position-btn"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
-            <div class="header">
+            <div class="header" aria-label="Encabezado de tareas por hacer">
                 <h1>Por hacer</h1>
             </div>
-            <div class="new-task">
+            <div class="new-task" aria-label="Formulario de nueva tarea">
                 <form id="frmNewTask" autocomplete="off">
                     <input type="text" placeholder="Nueva tarea" id="txtNewTask" required="true" />
                     <button class="btn-transparent" id="btnNewTask">
-                        <img src="./images/add.png" alt="Agregar tarea">
+                        <img src="./assets/images/add.png" alt="Agregar tarea">
                     </button>
                 </form>
             </div>
-            <div class="list">
+            <div class="list" aria-label="Lista de tareas pendientes">
                 <ul id="ulOpenTasks">
                 </ul>
             </div>
-            <div class="list">
+            <div class="list" aria-label="Lista de tareas cerradas">
                 <ul id="ulClosedTasks">
                 </ul>
             </div>
-            <div class="pomodoro-container">
+            <div class="pomodoro-container" aria-label="Botones de control para Pomodoro">
                 <button class="btn-transparent" id="btnPomodoro" onclick="openModalParams()">
-                    <img src="./images/pomodoro.png" alt="Abrir modal de parámetros">
+                    <img src="./assets/images/pomodoro.png" alt="Abrir modal de parámetros">
                 </button>
                 <div class="timer-container hide" id="timerBar">
                     <div class="cycle-container">
@@ -48,27 +111,33 @@
                     <span id="timer"></span>
                     <div class="control-container">
                         <button class="btn-control" id="btnPause" onclick="pausePomodoro()">
-                            <img src="./images/pause.png" alt="Pausar Pomodoro">
+                            <img src="./assets/images/pause.png" alt="Pausar Pomodoro">
                         </button>
                         <button class="btn-control hide" id="btnContinue" onclick="continuePomodoro()">
-                            <img src="./images/continue.png" alt="Continuar Pomodoro">
+                            <img src="./assets/images/continue.png" alt="Continuar Pomodoro">
                         </button>
                         <button class="btn-control" id="btnStop" onclick="stopPomodoro()">
-                            <img src="./images/stop.png" alt="Detener Pomodoro">
+                            <img src="./assets/images/stop.png" alt="Detener Pomodoro">
                         </button>
                     </div>
                 </div>
             </div>
+            <div class="help-container">
+                <button class="btn-transparent help-btn">
+                    <img src="./assets/images/help.png" alt="Ayuda" onclick="openModalTutorial()">
+                </button>
+            </div>
         </div>
-        <div class="modal-container hide" id="modalParamsContainer">
+
+        <div class="modal-container hide" id="modalParamsContainer" aria-label="Configuración de Tiempos para Pomodoro">
             <div class="modal" id="modalParams">
                 <div class="modal-header">
-                    <h3>Tiempos Pomodoro</h3>
+                    <h4>Tiempos Pomodoro</h4>
                     <button class="btn-transparent" onclick="closeModalParams()">
-                        <img src="./images/close.png" alt="Cerrar modal">
+                        <img src="./assets/images/close.png" alt="Cerrar modal">
                     </button>
                 </div>
-                <div class="modal-content">
+                <div class="modal-content params-container">
                     <div class="param">
                         <span id="spanWork">25</span>
                         <input type="range" id="rngWork" min="5" max="45" step="5" value="25">
@@ -97,8 +166,10 @@
         <p>Desarrollado por <a href="https://github.com/naufragotech" target="_blank">Naufrago Tech</a></p>
     </footer>
 
-    <script src="./to-do.js"></script>
-    <script src="./pomodoro.js"></script>
+    <script src="./scripts/tutorial.js"></script>
+    <script src="./scripts/to-do.js"></script>
+    <script src="./scripts/pomodoro.js"></script>
+    <script src="./scripts/index.js"></script>
 </body>
 
 </html>

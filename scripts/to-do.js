@@ -171,7 +171,7 @@ function addTaskButons(liNewTask) {
     btnMenu.classList.add("btn-borderless", "btn-menu");
 
     const imgMenu = document.createElement("img");
-    imgMenu.src = "./images/menu.png";
+    imgMenu.src = "./assets/images/menu.png";
     imgMenu.alt = "Menu de tarea"
     imgMenu.width = 12;
 
@@ -182,7 +182,7 @@ function addTaskButons(liNewTask) {
     btnErase.classList.add("btn-borderless", "btn-erase", "hide");
 
     const imgErase = document.createElement("img");
-    imgErase.src = "./images/erase.png";
+    imgErase.src = "./assets/images/erase.png";
     imgErase.alt = "Eliminar tarea"
     imgErase.width = 18;
 
@@ -193,7 +193,7 @@ function addTaskButons(liNewTask) {
     btnEdit.classList.add("btn-borderless", "btn-edit", "hide");
 
     const imgEdit = document.createElement("img");
-    imgEdit.src = "./images/edit.png";
+    imgEdit.src = "./assets/images/edit.png";
     imgEdit.alt = "Editar tarea";
     imgEdit.width = 16;
 

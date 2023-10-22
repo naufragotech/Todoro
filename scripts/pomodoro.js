@@ -8,13 +8,6 @@ function closeModalParams() {
     modalParamsContainer.classList.add("hide");
 }
 
-// Close modal params on 'Escape' key
-window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        closeModalParams();
-    }
-});
-
 // Close modal params on click outside of the modal
 modalParamsContainer.addEventListener("click", (e) => {
 
